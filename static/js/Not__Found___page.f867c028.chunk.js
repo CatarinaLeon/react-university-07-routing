@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-lecture"]=this["webpackJsonpreact-lecture"]||[]).push([[2],{94:function(e,t,c){"use strict";c.r(t);var n=c(1);t.default=function(){return Object(n.jsx)("div",{style:{paddingTop:"80px"},children:Object(n.jsx)("h2",{children:"Page Not Found"})})}}}]);
+//# sourceMappingURL=Not__Found___page.f867c028.chunk.js.map
