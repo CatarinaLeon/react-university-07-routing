@@ -203,6 +203,13 @@ const CitiesBlock = () => {
 
   const noCities = !loading && !cities.length;
 
+  // Fix filter bug
+  useEffect(() => {
+    if (cities.length === 1) {
+      setFilter('');
+    }
+  }, [cities.length, setFilter]);
+
   return (
     <>
       {loading && <Loader />}

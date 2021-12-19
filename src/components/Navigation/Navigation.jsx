@@ -1,22 +1,21 @@
 import NavItem from './NavItem/NavItem';
-import { navConfig } from '../../data/navigation';
+import { HiBookOpen, HiAcademicCap } from 'react-icons/hi';
+// import { navConfig } from '../../data/navigation';
 
 const Navigation = () => {
   return (
     <nav style={{ paddingTop: 12 }}>
-      {/* <a href="/">{navConfig[0].name}</a>
-            <a href="/">{navConfig[1].name}</a> */}
-      {/* Лучше перебирающий метод массива map */}
+      <NavItem
+        name="Факультеты"
+        icon={<HiBookOpen color="#ff6b0a" size="24" />}
+        path="/departments"
+      />
 
-      {/* {navConfig.map(navItem => (
-                <a key={navItem.name} href="/">{navItem.name}</a>
-            ))} */}
-
-      {/* С ключем index и деструкт */}
-
-      {navConfig.map(({ name, icon }, index) => (
-        <NavItem key={index} name={name} icon={icon} />
-      ))}
+      <NavItem
+        name="Университет"
+        icon={<HiAcademicCap color="#ff6b0a" size="24" />}
+        path="/university"
+      />
     </nav>
   );
 };

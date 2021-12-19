@@ -8,7 +8,7 @@ import Paper from 'components/common/Paper/Paper';
 import CardWithMenu from './CardWithMenu/CardWithMenu';
 import { listStyles } from './ItemsListStyles';
 
-const ItemsList = ({ items, onEditItem, onDeleteItem }) => {
+const ItemsList = ({ items, onEditItem, onDeleteItem, link }) => {
   //  // // вызов при любом перерендере
   //   console.log('ItemsList');
 
@@ -31,6 +31,8 @@ const ItemsList = ({ items, onEditItem, onDeleteItem }) => {
         <li key={item.id}>
           <Paper>
             <CardWithMenu
+              item={item}
+              link={link}
               text={item.name}
               onEdit={() => onEditItem(item)}
               onDelete={() => onDeleteItem(item)}
@@ -45,11 +47,12 @@ const ItemsList = ({ items, onEditItem, onDeleteItem }) => {
 ItemsList.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string,
+      id: PropTypes.string,
     }),
   ).isRequired,
   onEditItem: PropTypes.func.isRequired,
   onDeleteItem: PropTypes.func.isRequired,
+  link: PropTypes.string,
 };
 
 // export default ItemsList;

@@ -1,53 +1,62 @@
-import { useState, useContext } from 'react';
-import Section from '../common/Section/Section';
-import Header from '../common/Header/Header';
-import UniversityBlock from '../UniversityBlock/UniversityBlock';
-import TutorsBlock from '../TutorsBlock/TutorsBlock';
-import CitiesBlock from '../CitiesBlock/CitiesBlock';
-import DepartmentsBlock from '../DepartmentsBlock/DepartmentsBlock';
+import { useContext, lazy, Suspense } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeContext, themes } from 'context/themeContext';
-import univerInfo from '../../data/univerInfo.json';
-
-import tutorsIcon from '../../images/cat.png';
-import citiesIcon from '../../images/pin.png';
-import departmentsIcon from '../../images/robot.png';
-
 import s from './Main.module.css';
+import Loader from 'components/common/Loader/Loader';
+// import UniversityPage from 'pages/UniversityPage/UniversityPage';
+// import DepartmentsListPage from 'pages/DepartmentsListPage/DepartmentsListPage';
+// import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
+// import DepartmentPage from 'pages/DepartmentPage/DepartmentPage';
 
-const { name, description } = univerInfo;
+const DepartmentPage = lazy(() =>
+  import(
+    '../../pages/DepartmentPage/DepartmentPage' /* webpackChunkName:  "Department__page" */
+  ),
+);
+const DepartmentsListPage = lazy(() =>
+  import(
+    '../../pages/DepartmentsListPage/DepartmentsListPage' /* webpackChunkName:  "Departments__List__Page" */
+  ),
+);
+const NotFoundPage = lazy(() =>
+  import(
+    '../../pages/NotFoundPage/NotFoundPage' /* webpackChunkName: "Not__Found___page" */
+  ),
+);
+const UniversityPage = lazy(() =>
+  import(
+    '../../pages/UniversityPage/UniversityPage' /* webpackChunkName: "University___page" */
+  ),
+);
 
 const Main = () => {
   const { theme } = useContext(ThemeContext);
-  const [showTutots, setShowTutots] = useState(true); // ВРЕМЕННЫЙ
   return (
     <main className={theme === themes.light ? s.lightTheme : s.darkTheme}>
-      <Header title="Информация о университете" />
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/departments" />} />
+          {/* <Route exact path="/">
+          <Redirect to='/departments' />
+        </Route> */}
 
-      <UniversityBlock name={name} descr={description} />
+          <Route path="/departments/:id">
+            <DepartmentPage />
+          </Route>
 
-      {/* ВРЕМЕННAЯ КНОПКА */}
-      <button
-        style={{ padding: 10, display: 'none' }}
-        onClick={() => setShowTutots(!showTutots)}
-      >
-        Toggle tutors
-      </button>
+          <Route exact path="/departments">
+            <DepartmentsListPage />
+          </Route>
 
-      {showTutots && (
-        <Section icon={tutorsIcon} title="Преподаватели">
-          <TutorsBlock />
-        </Section>
-      )}
-
-      <Section icon={citiesIcon} title="Города">
-        <CitiesBlock />
-      </Section>
-
-      <Section icon={departmentsIcon} title="Факультеты">
-        <DepartmentsBlock />
-      </Section>
+          <Route path="/university">
+            <UniversityPage />
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </Suspense>
     </main>
   );
 };
-// console.log('ffffffffff', departments);
 export default Main;
